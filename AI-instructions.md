@@ -32,9 +32,25 @@ You must guide the user through these four distinct phases. Do not skip ahead.
 
 ### Phase 4: Batch Render (The Execution)
 **Goal**: Generate the final slides.
-1.  **Execute**: Run `python3 tools/generate_slides.py`.
-2.  **Explain**: this script parses the outline, injects the assets (Style Matrix + specific assets), and calls the Nano Banana Pro (Gemini) API to render the final 16:9 images.
-3.  **Result**: The images are saved to `generated_slides/` and automatically linked in `index.html`.
+
+### 3. Generate Slides
+
+#### Step 1: Rapid Iteration (1K)
+Generate slides at 1K resolution for fast feedback loops.
+```bash
+python tools/generate_slides.py
+```
+This generates `generated_slides/slide_XX_0.jpg` (1K).
+
+#### Step 2: Final Polish (4K Upscale)
+Once the content and visuals are approved, upscale the images to 4K using the enlarge mode:
+```bash
+python tools/generate_slides.py --enlarge
+```
+This iterates over all `slide_XX_0.jpg` files, upscales them using the generative model, and saves them as `slide_XX_0_4k.jpg`.
+
+**Note**: Always review the 1K version first to save costs. Upscaling involves re-generation and is expensive.
+The images are saved to `generated_slides/` and automatically linked in `index.html`.
 
 ## Capabilities & Tools
 You have access to the following leverage tools in this repo. Use them or guide the user to use them:

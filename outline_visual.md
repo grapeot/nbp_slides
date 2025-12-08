@@ -79,11 +79,12 @@ This outline defines the visual scenes for the presentation.
 #### Slide 8: Technique 2 - Asset Injection
 *   **Layout**: Organic Integration Close-up.
 *   **Scene**:
-    *   **Prompt**: A stunning macro close-up demonstrating "Asset Injection". A high-quality white ceramic or matte plastic surface, angled to show depth and material.
-    *   Embedded deep into this material is the **QR Code**. It is physically etched or inlaid with dark, high-contrast stone or metal. It does NOT look like a flat sticker; it has texture and subtle depth, but the contrast is sharp enough (black on white) to be functional.
-    *   The lighting is soft and high-end, highlighting the texture of the etching without creating obscuring glare.
+    *   **Prompt**: A stunning close-up demonstrating "Asset Injection". The core subject is a **matte white ceramic** square tile containing the QR Code, embedded within a larger block of **translucent frosted glass**.
+    *   **Angle & Lighting**: The composition is framed at a **slight angle** (approx 15 degrees) to show the depth and refraction of the glass edges, but the central ceramic tile is properly aligned to remain scannable. The lighting is soft and diffused, ensuring **no reflections** on the matte QR code itself, while allowing the glass surroundings to glow.
+    *   Embedded into the matte center is the **QR Code**. It looks like a high-contrast ink print or matte dark stone inlay. It is strictly black and white.
+    *   **CRITICAL NEGATIVE PROMPT**: Do NOT generate any text, titles, or diagrams from the style matrix. The 'style matrix' asset is for **material and lighting reference only**. Do not render it. The ONLY text is the label and caption below.
     *   A floating glass label nearby reads: "Technique 2: Asset Injection".
-    *   Caption etched into the surface below: "Context Curation: Inject raw pixels, render the lighting and texture."
+    *   Caption etched into the glass surface below: "Context Curation: Inject raw pixels, render the lighting and texture."
 *   **Asset**: 
     *   imgs/style_matrix_0.jpg
     *   imgs/qrcode.png

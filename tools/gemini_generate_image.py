@@ -67,11 +67,13 @@ def generate(
         )
     ]
 
-    # Build image config with optional aspect_ratio
-    # NOTE: image_size removed as it previously caused validation errors with current SDK
     image_config_dict = {}
     if aspect_ratio:
         image_config_dict["aspect_ratio"] = aspect_ratio
+    
+    # Enable image_size again as SDK updated
+    if image_size:
+        image_config_dict["image_size"] = image_size
 
     generate_content_config = types.GenerateContentConfig(
         response_modalities=["IMAGE", "TEXT"],
@@ -143,8 +145,8 @@ Examples:
         "--size", "-s",
         type=str,
         default="1K",
-        choices=["1K", "2K"],
-        help="Image size: 1K or 2K (default: 1K) - CURRENTLY IGNORED due to SDK constraints"
+        choices=["1K", "2K", "4K"],
+        help="Image size: 1K, 2K or 4K (default: 1K)"
     )
     
     parser.add_argument(
