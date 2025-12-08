@@ -8,7 +8,7 @@ import os
 import argparse
 from livereload import Server
 
-def start_server(port=8000):
+def start_server(port=8080):
     """Start HTTP server with live reload"""
     # Create livereload server (it includes HTTP server functionality)
     server = Server()
@@ -36,7 +36,7 @@ def start_server(port=8000):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Start HTML slide server with live reload")
-    parser.add_argument("-p", "--port", type=int, default=8000, help="Server port (default: 8000)")
+    parser.add_argument("-p", "--port", type=int, default=8080, help="Server port (default: 8080)")
     args = parser.parse_args()
     
     # Get current script directory

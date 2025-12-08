@@ -1,8 +1,18 @@
-# The Generative Kernel
+# Nano Banana Pro Slide Deck Generator
 
-A next-generation presentation system where "Context is King." This project implements the **Generative Kernel** philosophy: instead of manually assembling slides, we inject raw assets and prompts into a generative model to render the final presentation layer.
+This repository contains the **Generative Kernel** source code for the presentation discussed in the blog post:
 
-## Philosophy
+**使用Nano Banana Pro生成整套PPT：疯狂，挑战和工作流 (Generating a Full Slide Deck with Nano Banana Pro: Madness, Challenges, and Workflow)**
+
+Read the full article here:
+*   [中文版 (Chinese)](https://yage.ai/nano-banana-pro.html)
+*   [English Version](https://yage.ai/nano-banana-pro-en.html)
+
+This project demonstrates a workflow to generate a complete, professional-grade slide deck using AI image generation (Nano Banana Pro / Gemini). The core idea is to treat the slide deck as a software artifact generated from a "kernel" of code, markdown, and assets, rather than manually assembling it in PowerPoint or Keynote.
+
+## The Generative Kernel Philosophy
+
+This project implements the **Generative Kernel** philosophy: instead of manually assembling slides, we inject raw assets and prompts into a generative model to render the final presentation layer.
 
 *   **Beyond DRY**: Don't just repeat yourself; generate yourself.
 *   **Asset Injection**: The core technique. We take raw functional assets (QR codes, logos, diagrams) and "inject" them into the generative process. The model renders the lighting, texture, and environment *around* the asset, creating a seamless organic integration.
