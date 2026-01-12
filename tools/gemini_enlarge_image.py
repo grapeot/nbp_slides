@@ -61,15 +61,13 @@ def enlarge(
         )
     ]
 
-    # Configuration for 4K output
-    image_config_dict = {
-        "image_size": "4K",
-        "aspect_ratio": "16:9" 
-    }
-
+    # Configuration for 4K output based on updated SDK support
     generate_content_config = types.GenerateContentConfig(
-        response_modalities=["IMAGE"], # Text is usually not needed for upscale
-        image_config=types.ImageConfig(**image_config_dict),
+        response_modalities=["IMAGE", "TEXT"],
+        image_config=types.ImageConfig(
+            aspect_ratio="16:9",
+            image_size="4K"
+        ),
     )
 
     print(f"Upscaling {image_path} to 4K...")
