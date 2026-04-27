@@ -29,6 +29,7 @@ env/
 # IDE
 .vscode/
 .idea/
+.claude/
 *.swp
 *.swo
 *~
@@ -53,6 +54,9 @@ archive/
 *.png
 *.webp
 *.pptx
+
+# Keep style reference preview images versionable.
+!styles/**/reference/**/*.jpg
 
 # Database
 *.db

@@ -1,76 +1,185 @@
-# Nano Banana Pro Slide Deck Generator
+# nbp_slides — AI Slide Deck Generator
 
-This repository contains the **Generative Kernel** source code for the presentation discussed in the blog post:
+An AI-powered slide deck generator that turns a content outline into a complete, visually styled presentation. Swap styles without touching the content — the same outline renders as clay sculpture, ink-wash calligraphy, dark-mode tech, or 30+ other looks.
 
-**使用Nano Banana Pro生成整套PPT：疯狂，挑战和工作流 (Generating a Full Slide Deck with Nano Banana Pro: Madness, Challenges, and Workflow)**
+This repository ships with the slides from the talk:
 
-Read the full article here:
-*   [中文版 (Chinese)](https://yage.ai/nano-banana-pro.html)
-*   [English Version](https://yage.ai/nano-banana-pro-en.html)
+**从小龙虾看到的：Agent Harness 解读** (ADG 广州站)
 
-This project demonstrates a workflow to generate a complete, professional-grade slide deck using AI image generation. The presentation content is about Nano Banana Pro, while the repository's default Gemini API model is now Nano Banana 2 (`gemini-3.1-flash-image-preview`). The core idea is to treat the slide deck as a software artifact generated from a "kernel" of code, markdown, and assets, rather than manually assembling it in PowerPoint or Keynote.
+Blog post: [中文](https://yage.ai/nano-banana-pro.html) · [English](https://yage.ai/nano-banana-pro-en.html)
 
-## The Generative Kernel Philosophy
+---
 
-This project implements the **Generative Kernel** philosophy: instead of manually assembling slides, we inject raw assets and prompts into a generative model to render the final presentation layer.
+## How It Works
 
-*   **Beyond DRY**: Don't just repeat yourself; generate yourself.
-*   **Asset Injection**: The core technique. We take raw functional assets (QR codes, logos, diagrams) and "inject" them into the generative process. The model renders the lighting, texture, and environment *around* the asset, creating a seamless organic integration.
-*   **The Glass Garden**: Our visual language. Translucent interfaces, matte ceramic accents, and soft, diffused lighting.
-
-## Workflow
-
-The system is designed for an AI-assisted loop:
-
-### 1. Define the Context
-Edit `outline_visual.md`. This is the source of truth.
-*   **Structure**: Markdown headers define slides.
-*   **Prompts**: Self-contained visual descriptions for each slide.
-*   **Assets**: Paths to local images (e.g., `imgs/qrcode.png`) to be injected.
-
-### 2. Generate (Draft Mode)
-Run the generator to create 1K previews. This is fast and cheap for iteration.
-```bash
-python tools/generate_slides.py
 ```
-This parses the outline, calls the Gemini 3.1 Flash Image Preview API by default, and saves images to `generated_slides/`.
+outline_visual.md   ←  what to say (content, layout intent)
+visual_guideline.md ←  how it looks (active style)
+        │
+        ▼
+tools/generate_slides.py
+        │  calls Gemini image generation API
+        ▼
+generated_slides/slide_NN_0.png  ...
+        │
+        ▼
+openclaw-harness.pptx  +  index.html (Reveal.js viewer)
+```
 
-### 3. Refine & Upscale (Production Mode)
-Once specific slides are approved, upscale them to 4K resolution using the generative upscaler.
+**Key design principle**: `outline_visual.md` only describes *what* to show (layout, text, data). All visual decisions come exclusively from `visual_guideline.md`, so changing the style is a one-file swap with no outline edits needed.
+
+---
+
+## Quick Start
+
+### 1. Setup
+
 ```bash
-# Upscale everything
+uv venv
+source .venv/bin/activate
+uv pip install -r requirements.txt
+```
+
+Create `.env` with your API key:
+
+```
+GOOGLE_API_KEY=your_key_here
+```
+
+### 2. Generate slides
+
+```bash
+# Generate all slides
+python tools/generate_slides.py
+
+# Generate specific slides only
+python tools/generate_slides.py --slides 0 1 5
+
+# Use SDK backend instead of llm-call
+python tools/generate_slides.py --backend sdk
+```
+
+Images are saved to `generated_slides/slide_NN_0.png`.
+
+### 3. Upscale to 4K
+
+```bash
+# Upscale all slides
 python tools/generate_slides.py --enlarge
 
 # Upscale specific slides
-python tools/generate_slides.py --enlarge --slides 8 11
+python tools/generate_slides.py --enlarge --slides 3 7
 ```
 
-### 4. Present
-Open `index.html`.
-The presentation uses **Reveal.js** to display the generated "Mega-Images" as full-screen backgrounds. It is simple, robust, and visually stunning.
+### 4. Export PPTX
 
-## Setup
+```bash
+python tools/export_pptx.py
+```
 
-1.  **Environment**:
-    ```bash
-    uv venv  # using uv is recommended
-    source .venv/bin/activate
-    uv pip install -r requirements.txt
-    ```
-2.  **Credentials**:
-    Create a `.env` file with your API key:
-    ```
-    GOOGLE_API_KEY=your_key_here
-    ```
+Outputs `openclaw-harness.pptx` with speaker notes.
+
+### 5. Present
+
+Open `index.html` in a browser. Press `S` for speaker notes view (Reveal.js).
+
+---
+
+## Switching Styles
+
+1. Copy the style definition you want from `styles/<category>/<style-id>/<style-id>.md` into `visual_guideline.md`
+2. Archive the current run first (optional but recommended):
+   ```bash
+   python .claude/skills/archive-slides/scripts/archive_slides.py <topic> <old-style-id> --project-root .
+   ```
+3. Regenerate:
+   ```bash
+   python tools/generate_slides.py
+   ```
+
+---
+
+## Style Library
+
+34 styles across 6 categories. The complete catalog lives in `styles/manifest.json`.
+
+Each style is self-contained:
+
+```text
+styles/<category>/<style-id>/
+├── <style-id>.md          # reusable style definition
+└── reference/
+    ├── prompts.md         # prompts used for preview images
+    └── *.jpg              # preview/reference images
+```
+
+| Category | Styles |
+|---|---|
+| business | `corporate-saas`, `minimalist-data`, `ted-style`, `archival-casefile`, `thermal-receipt-checklist` |
+| creative | `ink-wash-wuxia` ⭐, `clay-mimicry`, `comic-book`, `rick-morty`, `vector-illustration`, `vintage-travel` |
+| editorial | `bold-editorial`, `gradient-hero`, `retro-pop-swiss-grid`, `theater-ticket-scrapbook` |
+| education | `ikea-style`, `mind-map`, `process-flow`, `sketchnote`, `soft-pastel-edu`, `storyboard`, `warm-academic-humanism`, `stationery-folder-clipboard`, `terracotta-doodle-notes`, `vintage-scrapbook-journal` |
+| fun | `8bit-retro`, `cinematic-poster`, `minion-mayhem`, `whiteboard-strategy` |
+| tech | `dark-mode-tech`, `gradient-glass`, `neon-nightlife`, `acid-retrofuturist-blocks`, `blueprint-pop-lab` |
+
+⭐ = currently active style
+
+---
 
 ## Project Structure
 
-*   `outline_visual.md`: The "Source Code" of the presentation.
-*   `visual_guideline.md`: The "Visual Language" definition (The Glass Garden).
-*   `speak_notes.md`: The script for the presentation.
-*   `tools/`: Python scripts for generation and upscaling.
-    *   `generate_slides.py`: Main orchestrator.
-    *   `gemini_generate_image.py`: API wrapper for generation.
-    *   `gemini_enlarge_image.py`: API wrapper for upscaling.
-*   `generated_slides/`: The render targets.
-*   `index.html`: The viewer.
+```
+nbp_slides/
+├── outline_visual.md        # Presentation content (style-agnostic)
+├── visual_guideline.md      # Active style definition ← edit to switch styles
+├── index.html               # Reveal.js viewer
+├── openclaw-harness.pptx    # Exported presentation
+│
+├── tools/
+│   ├── generate_slides.py        # Main generator
+│   ├── gemini_generate_image.py  # Image generation API wrapper
+│   ├── gemini_enlarge_image.py   # 4K upscaling wrapper
+│   └── export_pptx.py            # PPTX builder with speaker notes
+│
+├── generated_slides/        # Output images (slide_NN_M.png)
+│
+├── styles/
+│   ├── manifest.json        # Style catalog
+│   ├── README.md
+│   ├── business/
+│   ├── creative/            # includes ink-wash-wuxia, clay-mimicry
+│   ├── editorial/
+│   ├── education/
+│   ├── fun/
+│   └── tech/
+│       └── <style-id>/
+│           ├── <style-id>.md
+│           └── reference/
+│
+└── archive/                 # Versioned backups of previous style runs
+    └── YYYY-MM-DD_topic_style/
+```
+
+---
+
+## Writing Slide Content
+
+Edit `outline_visual.md` using the `#### Slide N: Title` format. Each slide supports:
+
+- `**Layout**`: spatial arrangement intent (e.g. "三列并排 + 底部汇聚框")
+- `**Scene** > **文字叠加**`: text content to display
+- `**Asset**`: path to a local image to inject, or `none`
+
+**Do not** write style-specific rendering instructions in the outline. Style instructions belong in `visual_guideline.md` only.
+
+---
+
+## Archive Previous Runs
+
+```bash
+python .claude/skills/archive-slides/scripts/archive_slides.py <topic> <style-id> --project-root .
+# Example:
+python .claude/skills/archive-slides/scripts/archive_slides.py openclaw-harness clay-mimicry --project-root .
+```
+
+Archives are saved to `archive/YYYY-MM-DD_topic_style/` and include `visual_guideline.md`, `outline_visual.md`, and all slide PNGs.

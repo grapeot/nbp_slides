@@ -1,0 +1,316 @@
+{
+  "style_count": 34,
+  "categories": [
+    "business",
+    "creative",
+    "editorial",
+    "education",
+    "fun",
+    "tech"
+  ],
+  "items": [
+    {
+      "id": "corporate-saas",
+      "name": "企业SaaS",
+      "category": "business",
+      "path": "business/corporate-saas/corporate-saas.md",
+      "aliases": [],
+      "reference_path": "business/corporate-saas/reference"
+    },
+    {
+      "id": "minimalist-data",
+      "name": "极简数据叙事",
+      "category": "business",
+      "path": "business/minimalist-data/minimalist-data.md",
+      "aliases": [],
+      "reference_path": "business/minimalist-data/reference"
+    },
+    {
+      "id": "ted-style",
+      "name": "TED风格",
+      "category": "business",
+      "path": "business/ted-style/ted-style.md",
+      "aliases": [],
+      "reference_path": "business/ted-style/reference"
+    },
+    {
+      "id": "archival-casefile",
+      "name": "混合媒介档案卷宗风",
+      "category": "business",
+      "path": "business/archival-casefile/archival-casefile.md",
+      "aliases": [
+        "mixed-media-archival-casefile",
+        "casefile"
+      ],
+      "reference_path": "business/archival-casefile/reference"
+    },
+    {
+      "id": "thermal-receipt-checklist",
+      "name": "热敏纸票据清单风",
+      "category": "business",
+      "path": "business/thermal-receipt-checklist/thermal-receipt-checklist.md",
+      "aliases": [
+        "thermal-receipt-ticket",
+        "thermal-receipt"
+      ],
+      "reference_path": "business/thermal-receipt-checklist/reference"
+    },
+    {
+      "id": "clay-mimicry",
+      "name": "黏土拟物风格",
+      "category": "creative",
+      "path": "creative/clay-mimicry/clay-mimicry.md",
+      "aliases": [
+        "claymation"
+      ],
+      "reference_path": "creative/clay-mimicry/reference"
+    },
+    {
+      "id": "ink-wash-wuxia",
+      "name": "水墨武侠黑板风格",
+      "category": "creative",
+      "path": "creative/ink-wash-wuxia/ink-wash-wuxia.md",
+      "aliases": [],
+      "reference_path": "creative/ink-wash-wuxia/reference"
+    },
+    {
+      "id": "comic-book",
+      "name": "漫画英雄",
+      "category": "creative",
+      "path": "creative/comic-book/comic-book.md",
+      "aliases": [],
+      "reference_path": "creative/comic-book/reference"
+    },
+    {
+      "id": "rick-morty",
+      "name": "瑞克和莫蒂风格",
+      "category": "creative",
+      "path": "creative/rick-morty/rick-morty.md",
+      "aliases": [],
+      "reference_path": "creative/rick-morty/reference"
+    },
+    {
+      "id": "vector-illustration",
+      "name": "矢量插画风格",
+      "category": "creative",
+      "path": "creative/vector-illustration/vector-illustration.md",
+      "aliases": [],
+      "reference_path": "creative/vector-illustration/reference"
+    },
+    {
+      "id": "vintage-travel",
+      "name": "复古旅行海报",
+      "category": "creative",
+      "path": "creative/vintage-travel/vintage-travel.md",
+      "aliases": [],
+      "reference_path": "creative/vintage-travel/reference"
+    },
+    {
+      "id": "bold-editorial",
+      "name": "大胆编辑风",
+      "category": "editorial",
+      "path": "editorial/bold-editorial/bold-editorial.md",
+      "aliases": [],
+      "reference_path": "editorial/bold-editorial/reference"
+    },
+    {
+      "id": "gradient-hero",
+      "name": "渐变英雄漏斗",
+      "category": "editorial",
+      "path": "editorial/gradient-hero/gradient-hero.md",
+      "aliases": [],
+      "reference_path": "editorial/gradient-hero/reference"
+    },
+    {
+      "id": "retro-pop-swiss-grid",
+      "name": "70年代复古波普网格风",
+      "category": "editorial",
+      "path": "editorial/retro-pop-swiss-grid/retro-pop-swiss-grid.md",
+      "aliases": [
+        "retro-pop-grid",
+        "retro-pop-swiss"
+      ],
+      "reference_path": "editorial/retro-pop-swiss-grid/reference"
+    },
+    {
+      "id": "theater-ticket-scrapbook",
+      "name": "剧场票根叙事风",
+      "category": "editorial",
+      "path": "editorial/theater-ticket-scrapbook/theater-ticket-scrapbook.md",
+      "aliases": [
+        "retro-ticket-collage",
+        "theater-ticket"
+      ],
+      "reference_path": "editorial/theater-ticket-scrapbook/reference"
+    },
+    {
+      "id": "ikea-style",
+      "name": "宜家风格",
+      "category": "education",
+      "path": "education/ikea-style/ikea-style.md",
+      "aliases": [],
+      "reference_path": "education/ikea-style/reference"
+    },
+    {
+      "id": "mind-map",
+      "name": "思维导图",
+      "category": "education",
+      "path": "education/mind-map/mind-map.md",
+      "aliases": [],
+      "reference_path": "education/mind-map/reference"
+    },
+    {
+      "id": "process-flow",
+      "name": "流程图",
+      "category": "education",
+      "path": "education/process-flow/process-flow.md",
+      "aliases": [],
+      "reference_path": "education/process-flow/reference"
+    },
+    {
+      "id": "sketchnote",
+      "name": "手绘笔记",
+      "category": "education",
+      "path": "education/sketchnote/sketchnote.md",
+      "aliases": [],
+      "reference_path": "education/sketchnote/reference"
+    },
+    {
+      "id": "soft-pastel-edu",
+      "name": "柔和粉彩教育",
+      "category": "education",
+      "path": "education/soft-pastel-edu/soft-pastel-edu.md",
+      "aliases": [],
+      "reference_path": "education/soft-pastel-edu/reference"
+    },
+    {
+      "id": "storyboard",
+      "name": "故事板旅程",
+      "category": "education",
+      "path": "education/storyboard/storyboard.md",
+      "aliases": [],
+      "reference_path": "education/storyboard/reference"
+    },
+    {
+      "id": "warm-academic-humanism",
+      "name": "暖色学术人文风格",
+      "category": "education",
+      "path": "education/warm-academic-humanism/warm-academic-humanism.md",
+      "aliases": [
+        "claude-style"
+      ],
+      "reference_path": "education/warm-academic-humanism/reference"
+    },
+    {
+      "id": "stationery-folder-clipboard",
+      "name": "文具文件夹剪贴板风",
+      "category": "education",
+      "path": "education/stationery-folder-clipboard/stationery-folder-clipboard.md",
+      "aliases": [
+        "physical-folder-doc",
+        "folder-clipboard"
+      ],
+      "reference_path": "education/stationery-folder-clipboard/reference"
+    },
+    {
+      "id": "terracotta-doodle-notes",
+      "name": "陶土色手绘涂鸦笔记风",
+      "category": "education",
+      "path": "education/terracotta-doodle-notes/terracotta-doodle-notes.md",
+      "aliases": [
+        "terracotta-doodle"
+      ],
+      "reference_path": "education/terracotta-doodle-notes/reference"
+    },
+    {
+      "id": "vintage-scrapbook-journal",
+      "name": "复古手帐调查板风",
+      "category": "education",
+      "path": "education/vintage-scrapbook-journal/vintage-scrapbook-journal.md",
+      "aliases": [
+        "vintage-scrapbook-notes",
+        "scrapbook-journal"
+      ],
+      "reference_path": "education/vintage-scrapbook-journal/reference"
+    },
+    {
+      "id": "8bit-retro",
+      "name": "8位复古游戏",
+      "category": "fun",
+      "path": "fun/8bit-retro/8bit-retro.md",
+      "aliases": [],
+      "reference_path": "fun/8bit-retro/reference"
+    },
+    {
+      "id": "cinematic-poster",
+      "name": "电影海报",
+      "category": "fun",
+      "path": "fun/cinematic-poster/cinematic-poster.md",
+      "aliases": [],
+      "reference_path": "fun/cinematic-poster/reference"
+    },
+    {
+      "id": "minion-mayhem",
+      "name": "小黄人乱斗",
+      "category": "fun",
+      "path": "fun/minion-mayhem/minion-mayhem.md",
+      "aliases": [],
+      "reference_path": "fun/minion-mayhem/reference"
+    },
+    {
+      "id": "whiteboard-strategy",
+      "name": "白板策略",
+      "category": "fun",
+      "path": "fun/whiteboard-strategy/whiteboard-strategy.md",
+      "aliases": [],
+      "reference_path": "fun/whiteboard-strategy/reference"
+    },
+    {
+      "id": "dark-mode-tech",
+      "name": "暗黑科技",
+      "category": "tech",
+      "path": "tech/dark-mode-tech/dark-mode-tech.md",
+      "aliases": [],
+      "reference_path": "tech/dark-mode-tech/reference"
+    },
+    {
+      "id": "gradient-glass",
+      "name": "渐变拟物玻璃卡片风格",
+      "category": "tech",
+      "path": "tech/gradient-glass/gradient-glass.md",
+      "aliases": [],
+      "reference_path": "tech/gradient-glass/reference"
+    },
+    {
+      "id": "neon-nightlife",
+      "name": "霓虹夜生活",
+      "category": "tech",
+      "path": "tech/neon-nightlife/neon-nightlife.md",
+      "aliases": [],
+      "reference_path": "tech/neon-nightlife/reference"
+    },
+    {
+      "id": "acid-retrofuturist-blocks",
+      "name": "酸性色块复古未来风",
+      "category": "tech",
+      "path": "tech/acid-retrofuturist-blocks/acid-retrofuturist-blocks.md",
+      "aliases": [
+        "acid-retrofuturist-color-block",
+        "neon-retro-tech-blocks"
+      ],
+      "reference_path": "tech/acid-retrofuturist-blocks/reference"
+    },
+    {
+      "id": "blueprint-pop-lab",
+      "name": "坐标蓝图波普实验室风",
+      "category": "tech",
+      "path": "tech/blueprint-pop-lab/blueprint-pop-lab.md",
+      "aliases": [
+        "blueprint-pop-lab-infographic",
+        "coordinate-blueprint"
+      ],
+      "reference_path": "tech/blueprint-pop-lab/reference"
+    }
+  ],
+  "updated_at": "2026-04-27"
+}
