@@ -1,4 +1,6 @@
 livereload==2.7.1
 tornado==6.5.2
 google-genai>=1.54.0
+openai>=1.50.0
 python-dotenv>=1.0.0
+Pillow>=10.0.0
