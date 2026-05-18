@@ -59,9 +59,18 @@ def parse_slides(outline_path, start_slide=1, end_slide=19, specific_slides=None
                     if val.lower() != "none":
                         asset_paths.append(val)
 
+        # Strip the `#### Slide N: TITLE` header line before passing content to
+        # the image model. The slide number is a meta-label used to index the
+        # outline file — image models occasionally render it as decorative
+        # text on the slide ("Slide 12" baked into the image). Removing the
+        # header eliminates that leak path without losing any prompt content.
+        content_for_prompt = re.sub(
+            r'^#### Slide \d+:[^\n]*\n?', '', slide_content, count=1
+        ).lstrip()
+
         slides.append({
             'number': slide_num,
-            'content': slide_content,
+            'content': content_for_prompt,
             'asset_paths': asset_paths,
         })
     return slides
@@ -153,13 +162,15 @@ def _resolve_defaults(args):
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Generate slides")
     parser.add_argument("--enlarge", action="store_true",
-                        help="Enlarge existing slides to 4K (Gemini only)")
+                        help="Enlarge existing slides to 4K (Gemini only — gpt-image-2 "
+                             "already renders 4K natively)")
     parser.add_argument("--slides", type=int, nargs="+",
                         help="Specific slide numbers to process (e.g., --slides 8 11)")
-    parser.add_argument("--model", choices=["gemini", "gpt"], default="gemini",
-                        help="Backend model (default: gemini)")
+    parser.add_argument("--model", choices=["gemini", "gpt"], default="gpt",
+                        help="Backend model (default: gpt). Gemini path remains "
+                             "fully supported; pass --model gemini to use it.")
     parser.add_argument("--size", choices=["1K", "2K", "4K"],
-                        help="Image size (default: 1K for gemini, 4K for gpt)")
+                        help="Image size (default: 4K for gpt, 1K for gemini)")
     parser.add_argument("--quality", choices=["low", "medium", "high"],
                         help="Quality tier for gpt-image-2 only (default: low). "
                              "Ignored for gemini.")

@@ -79,15 +79,39 @@ def test_parse_slides_range_filter(outline_file: Path):
     assert [s["number"] for s in slides] == [2]
 
 
+def test_parse_slides_strips_slide_header_from_content(outline_file: Path):
+    """The `#### Slide N: TITLE` header is a meta-label used to index the
+    outline. It must NOT appear in the content payload sent to the image
+    model — otherwise the model can render the literal text "Slide N" onto
+    the generated slide. Asset extraction still runs against the original
+    block, so dropping the header line is safe."""
+    slides = generate_slides.parse_slides(str(outline_file))
+    for s in slides:
+        assert not s["content"].lstrip().startswith("#### Slide")
+        # The number itself remains accessible via the dict key.
+        assert isinstance(s["number"], int)
+
+
+def test_parse_slides_preserves_body_after_strip(outline_file: Path):
+    """Stripping the header should remove ONLY the header line — every other
+    line of the slide block must survive untouched."""
+    slides = generate_slides.parse_slides(str(outline_file))
+    slide_2 = next(s for s in slides if s["number"] == 2)
+    assert "**Layout**: Two panel." in slide_2["content"]
+    assert "A diagram with a single asset injected." in slide_2["content"]
+
+
 # ---------------------------------------------------------------------------
 # build_prompt
 # ---------------------------------------------------------------------------
 
 
 def test_build_prompt_includes_guideline_and_content(tmp_path: Path):
+    # The Slide N header is already stripped by parse_slides before reaching
+    # build_prompt — fixture content reflects that contract.
     slide = {
         "number": 1,
-        "content": "#### Slide 1: Title\nSome content here.",
+        "content": "Some content here.",
         "asset_paths": [],
     }
     guideline = "Test visual guideline body."
@@ -99,6 +123,19 @@ def test_build_prompt_includes_guideline_and_content(tmp_path: Path):
     assert image_inputs == []
 
 
+def test_build_prompt_does_not_inject_slide_number(tmp_path: Path):
+    """Defense in depth: even if some caller forgets to strip the header, the
+    prompt body itself should not introduce a `Slide N` label."""
+    slide = {
+        "number": 7,
+        "content": "Body content without any slide-number reference.",
+        "asset_paths": [],
+    }
+    prompt, _ = generate_slides.build_prompt(slide, "guideline", tmp_path)
+    assert "Slide 7" not in prompt
+    assert "Slide N" not in prompt
+
+
 def test_build_prompt_resolves_existing_asset(tmp_path: Path):
     asset = tmp_path / "imgs" / "foo.png"
     asset.parent.mkdir(parents=True)
@@ -106,7 +143,7 @@ def test_build_prompt_resolves_existing_asset(tmp_path: Path):
 
     slide = {
         "number": 1,
-        "content": "#### Slide 1: X",
+        "content": "Some slide body referencing an asset.",
         "asset_paths": ["imgs/foo.png"],
     }
 
@@ -119,7 +156,7 @@ def test_build_prompt_resolves_existing_asset(tmp_path: Path):
 def test_build_prompt_skips_missing_asset(tmp_path: Path, capsys):
     slide = {
         "number": 1,
-        "content": "#### Slide 1: X",
+        "content": "Some slide body.",
         "asset_paths": ["imgs/does_not_exist.png"],
     }
 
@@ -138,11 +175,32 @@ def test_build_prompt_skips_missing_asset(tmp_path: Path, capsys):
 def test_build_parser_defaults():
     parser = generate_slides.build_parser()
     args = parser.parse_args([])
-    assert args.model == "gemini"
+    # Default backend is gpt-image-2 — it renders 2K/4K natively and produces
+    # cleaner typography than Gemini for slide-style content. Gemini remains
+    # fully supported via `--model gemini`.
+    assert args.model == "gpt"
     assert args.size is None
     assert args.quality is None
     assert args.enlarge is False
     assert args.slides is None
+
+
+def test_build_parser_explicit_gemini():
+    parser = generate_slides.build_parser()
+    args = parser.parse_args(["--model", "gemini"])
+    assert args.model == "gemini"
+
+
+def test_resolve_defaults_no_args_yields_gpt_4k():
+    """When the user passes no model/size/quality, the resolved defaults
+    should be the gpt-image-2 4K low-quality batch profile."""
+    parser = generate_slides.build_parser()
+    args = parser.parse_args([])
+    model, size, quality, workers = generate_slides._resolve_defaults(args)
+    assert model == "gpt"
+    assert size == "4K"
+    assert quality == "low"
+    assert workers == 8
 
 
 def test_build_parser_gpt_2k_medium():

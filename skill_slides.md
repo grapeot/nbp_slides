@@ -46,7 +46,7 @@ OPENAI_API_KEY=your_key_here
 
 Edit `visual_guideline.md`. This is the *visual anchor* every slide is generated against. Without a strong guideline, slides drift in style between renders.
 
-### Yan's preferred style: "Clean Ink"
+### Sample style: "Clean Ink"
 
 ```
 - Background: cool light grey (#F0F4F8) with an ultra-fine grid.
@@ -138,31 +138,32 @@ If a slide needs a brand logo, screenshot, or QR code:
 
 ---
 
-## Step 5: Generate 1K / 2K Versions (Fast Iteration)
+## Step 5: Generate Slides
 
-The repo supports two backends — **Gemini** (default) for cheap, fast 1K renders, and **GPT-Image-2** for cleaner typography and direct higher-res rendering.
+The repo supports two backends — **GPT-Image-2** (default) for cleaner typography and direct higher-res rendering, and **Gemini** for cheap fast iteration on visual-heavy decks.
 
 ```bash
-# Default: Gemini at 1K, 4 workers in parallel
+# Default: GPT-Image-2 at 4K, low quality, 8 workers in parallel
 python tools/generate_slides.py
 
 # Generate specific slides only (use while iterating)
 python tools/generate_slides.py --slides 3 5 8
 
-# Use GPT-Image-2 backend at 2K with medium quality
-python tools/generate_slides.py --model gpt --size 2K --quality medium
+# Bump GPT to medium quality for final-quality renders
+python tools/generate_slides.py --quality medium
+
+# Use the Gemini backend (1K, 4 workers)
+python tools/generate_slides.py --model gemini
 ```
 
 Output goes to `generated_slides/slide_NN_0.jpg` (or `.png` depending on backend).
 
-### Backend choice: Gemini vs GPT-Image-2
+### Backend choice: GPT-Image-2 vs Gemini
 
-- **Gemini** — cheaper per image, faster, more permissive with style descriptions. Best for early iteration and when style coherence across many slides is critical.
-- **GPT-Image-2** — much stronger at rendering legible text within the image, including tables and labels. Best for final-quality decks where the text-on-slide is critical (which, given the Dual-Use principle above, is most of the time). Quality tiers: `low` / `medium` / `high`.
+- **GPT-Image-2** (default) — much stronger at rendering legible text within the image, including tables and labels. Renders 2K / 4K natively, so no enlargement step is needed. Best for final-quality decks where the text-on-slide is critical (which, given the Dual-Use principle above, is most of the time). Quality tiers: `low` / `medium` / `high`. Default is `low` for cheap batches; raise to `medium` for the final pass.
+- **Gemini** — cheaper per image, faster, more permissive with style descriptions. Best for visually-rich keynote decks where typography matters less than illustration density. Output is 1K by default — use the separate enlargement step to bump to 4K.
 
-A common workflow: prototype with Gemini at 1K, then re-render the final deck with GPT-Image-2 at 2K medium.
-
-> **Note**: when using the Gemini backend with `tools/generate_slides.py`, ensure `ThreadPoolExecutor(max_workers=8)` for slide-batch parallelism. With GPT-Image-2 the default is already 8.
+A common workflow: render the deck at GPT-Image-2 4K low to validate structure, then re-render at `--quality medium` once the content is final.
 
 ---
 
